@@ -5,6 +5,13 @@
   const note = document.getElementById('fundraiserNote');
   const toast = document.getElementById('toast');
 
+  const receiptNote = document.querySelector('.receipt-note');
+  if (receiptNote) receiptNote.textContent = 'This page stays focused on the lab, the equipment and the recovery trail.';
+  const privacyNote = document.querySelector('.privacy-note');
+  if (privacyNote) privacyNote.textContent = 'No exact storage address is published here. The campaign needs proof, not somebody else\'s keys.';
+  const storageImage = document.getElementById('storageImage');
+  if (storageImage) storageImage.alt = 'Single cropped still from the Washington storage video showing Tony beside the storage unit and stored equipment.';
+
   const showToast = (message) => {
     if (!toast) return;
     toast.textContent = message;
