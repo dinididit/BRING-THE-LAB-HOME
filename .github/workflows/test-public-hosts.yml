@@ -1,0 +1,27 @@
+name: Test public fallback hosts
+
+on:
+  push:
+    branches: [host-verification-2026-09-11]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check candidate static hosts
+        run: |
+          set -u
+          COMMIT="83a62e47a8a3eb4b226f78ee20fbf3707f7f46b4"
+          URLS=(
+            "https://cdn.jsdelivr.net/gh/dinididit/BRING-THE-LAB-HOME@$COMMIT/index.html"
+            "https://raw.githack.com/dinididit/BRING-THE-LAB-HOME/$COMMIT/index.html"
+            "https://rawcdn.githack.com/dinididit/BRING-THE-LAB-HOME/$COMMIT/index.html"
+          )
+          for URL in "${URLS[@]}"; do
+            echo "=== $URL ==="
+            curl -L -sS -D /tmp/headers -o /tmp/page "$URL" || { echo FETCH_FAILED; continue; }
+            head -20 /tmp/headers
+            echo "marker=$(grep -ci 'clean-rebuild-2026-09-11-v2' /tmp/page || true)"
+            echo "old_contact_copy=$(grep -ci 'Frames from the' /tmp/page || true)"
+            echo "content_bytes=$(wc -c < /tmp/page)"
+          done
