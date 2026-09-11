@@ -1,4 +1,4 @@
-name: Verify Render deployment
+name: Verify retired public site
 
 on:
   push:
@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Wait for Render deploy
         run: sleep 75
-      - name: Verify live page
+      - name: Verify public site is retired
         run: |
           set -e
           URL="https://bring-the-lab-home.onrender.com/"
@@ -19,6 +19,9 @@ jobs:
           status=$(curl -L -sS -o /tmp/page.html -w "%{http_code}" "$URL")
           echo "HTTP $status"
           test "$status" = "200"
-          grep -qi "BRING THE LAB HOME" /tmp/page.html
-          grep -qi "Ninja's Ultimate Dojo" /tmp/page.html
-          echo "LIVE_SITE_VERIFIED"
+          grep -qi "Offline for rebuild" /tmp/page.html
+          if grep -qi "Frames from the .everything in storage. video" /tmp/page.html; then
+            echo "OLD_STORAGE_CONTACT_SHEET_COPY_STILL_LIVE"
+            exit 1
+          fi
+          echo "RETIRED_SITE_VERIFIED"
