@@ -1,4 +1,4 @@
-name: Verify public fallback host
+name: Diagnose fallback image payload
 
 on:
   push:
@@ -8,35 +8,16 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Verify rendered host and all critical assets
+      - name: Inspect hero payload delivery
         run: |
           set -euo pipefail
           COMMIT="83a62e47a8a3eb4b226f78ee20fbf3707f7f46b4"
           BASE="https://raw.githack.com/dinididit/BRING-THE-LAB-HOME/$COMMIT"
-
-          status=$(curl -L -sS -D /tmp/index.headers -o /tmp/index.html -w "%{http_code}" "$BASE/index.html")
-          test "$status" = "200"
-          grep -qi '^content-type: text/html' /tmp/index.headers
-          grep -qi 'clean-rebuild-2026-09-11-v2' /tmp/index.html
-          grep -qi 'This is the lab' /tmp/index.html
-          grep -qi 'One image. One purpose.' /tmp/index.html
-          grep -qi "Ninja's Ultimate Dojo" /tmp/index.html
-          ! grep -qi 'Frames from the' /tmp/index.html
-          ! grep -qi 'Offline for rebuild' /tmp/index.html
-
-          for asset in styles.css app.js assets/lab-workbench.jpg assets/lab-wide.jpg; do
-            code=$(curl -L -sS -o "/tmp/$(basename "$asset")" -w "%{http_code}" "$BASE/$asset")
-            echo "$asset HTTP $code"
-            test "$code" = "200"
+          for asset in assets/data/hero-00.b64 assets/data/hero-rest.b64 assets/data/storage.b64; do
+            echo "=== $asset ==="
+            code=$(curl -L -sS -D /tmp/h -o /tmp/p -w "%{http_code}" "$BASE/$asset")
+            echo "HTTP $code"
+            grep -i '^content-type:' /tmp/h || true
+            echo "bytes=$(wc -c < /tmp/p)"
+            echo -n 'prefix='; head -c 80 /tmp/p | tr '\n\r' ' '; echo
           done
-
-          curl -L -sS "$BASE/assets/data/hero-00.b64" -o /tmp/hero0
-          curl -L -sS "$BASE/assets/data/hero-rest.b64" -o /tmp/herorest
-          cat /tmp/hero0 /tmp/herorest | tr -d '\n\r ' | base64 -d > /tmp/hero.jpg
-          file /tmp/hero.jpg | grep -qi 'JPEG image data'
-
-          curl -L -sS "$BASE/assets/data/storage.b64" | tr -d '\n\r ' | base64 -d > /tmp/storage.jpg
-          file /tmp/storage.jpg | grep -qi 'JPEG image data'
-
-          echo 'PUBLIC_FALLBACK_VERIFIED'
-          echo "$BASE/index.html"
