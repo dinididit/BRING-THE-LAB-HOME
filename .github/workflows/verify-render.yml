@@ -1,0 +1,24 @@
+name: Verify Render deployment
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for Render deploy
+        run: sleep 75
+      - name: Verify live page
+        run: |
+          set -e
+          URL="https://bring-the-lab-home.onrender.com/"
+          echo "Checking $URL"
+          status=$(curl -L -sS -o /tmp/page.html -w "%{http_code}" "$URL")
+          echo "HTTP $status"
+          test "$status" = "200"
+          grep -qi "BRING THE LAB HOME" /tmp/page.html
+          grep -qi "Ninja's Ultimate Dojo" /tmp/page.html
+          echo "LIVE_SITE_VERIFIED"
