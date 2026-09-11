@@ -1,4 +1,4 @@
-name: Diagnose fallback image payload
+name: Diagnose base64 payloads
 
 on:
   push:
@@ -8,16 +8,32 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Inspect hero payload delivery
+      - name: Validate and clean payloads
         run: |
           set -euo pipefail
           COMMIT="83a62e47a8a3eb4b226f78ee20fbf3707f7f46b4"
           BASE="https://raw.githack.com/dinididit/BRING-THE-LAB-HOME/$COMMIT"
           for asset in assets/data/hero-00.b64 assets/data/hero-rest.b64 assets/data/storage.b64; do
-            echo "=== $asset ==="
-            code=$(curl -L -sS -D /tmp/h -o /tmp/p -w "%{http_code}" "$BASE/$asset")
-            echo "HTTP $code"
-            grep -i '^content-type:' /tmp/h || true
-            echo "bytes=$(wc -c < /tmp/p)"
-            echo -n 'prefix='; head -c 80 /tmp/p | tr '\n\r' ' '; echo
+            name=$(basename "$asset")
+            curl -L -sS "$BASE/$asset" -o "/tmp/$name"
+            tr -d '\n\r\t ' < "/tmp/$name" > "/tmp/$name.clean"
+            echo "=== $name ==="
+            echo "clean_bytes=$(wc -c < /tmp/$name.clean) mod4=$(( $(wc -c < /tmp/$name.clean) % 4 ))"
+            python3 - "/tmp/$name.clean" <<'PY'
+import re,sys
+b=open(sys.argv[1],'rb').read()
+bad=[(i,chr(c)) for i,c in enumerate(b) if not (65<=c<=90 or 97<=c<=122 or 48<=c<=57 or c in b'+/=')]
+print('bad_count=',len(bad),'first=',bad[:20])
+PY
           done
+          cat /tmp/hero-00.b64.clean /tmp/hero-rest.b64.clean > /tmp/hero.clean
+          python3 - <<'PY'
+import base64
+for p in ['/tmp/hero.clean','/tmp/storage.b64.clean']:
+ b=open(p,'rb').read()
+ b2=bytes(c for c in b if chr(c).isalnum() or c in b'+/=')
+ print(p,'before',len(b),'after',len(b2),'mod4',len(b2)%4)
+ try:
+  x=base64.b64decode(b2,validate=False); print('decoded',len(x),x[:4])
+ except Exception as e: print('decode_error',repr(e))
+PY
