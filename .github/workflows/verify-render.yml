@@ -1,4 +1,4 @@
-name: Verify retired public site
+name: Verify clean public rebuild
 
 on:
   push:
@@ -9,19 +9,38 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-      - name: Wait for Render deploy
-        run: sleep 75
-      - name: Verify public site is retired
+      - name: Wait for public deploy
+        run: sleep 120
+      - name: Verify corrected page and image payloads
         run: |
-          set -e
-          URL="https://bring-the-lab-home.onrender.com/"
+          set -euo pipefail
+          BASE="https://bring-the-lab-home.onrender.com"
+          URL="$BASE/?v=$GITHUB_SHA"
           echo "Checking $URL"
-          status=$(curl -L -sS -o /tmp/page.html -w "%{http_code}" "$URL")
+          status=$(curl -L -sS -H 'Cache-Control: no-cache' -o /tmp/page.html -w "%{http_code}" "$URL")
           echo "HTTP $status"
           test "$status" = "200"
-          grep -qi "Offline for rebuild" /tmp/page.html
-          if grep -qi "Frames from the .everything in storage. video" /tmp/page.html; then
-            echo "OLD_STORAGE_CONTACT_SHEET_COPY_STILL_LIVE"
+
+          grep -qi 'clean-rebuild-2026-09-11-v2' /tmp/page.html
+          grep -qi 'This is the lab' /tmp/page.html
+          grep -qi 'One image. One purpose.' /tmp/page.html
+          grep -qi "Ninja's Ultimate Dojo" /tmp/page.html
+
+          if grep -qi 'Frames from the' /tmp/page.html; then
+            echo 'OLD_STORAGE_CONTACT_SHEET_COPY_STILL_LIVE'
             exit 1
           fi
-          echo "RETIRED_SITE_VERIFIED"
+          if grep -qi 'Offline for rebuild' /tmp/page.html; then
+            echo 'RETIREMENT_PLACEHOLDER_STILL_LIVE'
+            exit 1
+          fi
+
+          curl -L -sS -H 'Cache-Control: no-cache' "$BASE/assets/data/hero-00.b64?v=$GITHUB_SHA" -o /tmp/hero0
+          curl -L -sS -H 'Cache-Control: no-cache' "$BASE/assets/data/hero-rest.b64?v=$GITHUB_SHA" -o /tmp/herorest
+          cat /tmp/hero0 /tmp/herorest | tr -d '\n\r ' | base64 -d > /tmp/hero.jpg
+          file /tmp/hero.jpg | grep -qi 'JPEG image data'
+
+          curl -L -sS -H 'Cache-Control: no-cache' "$BASE/assets/data/storage.b64?v=$GITHUB_SHA" | tr -d '\n\r ' | base64 -d > /tmp/storage.jpg
+          file /tmp/storage.jpg | grep -qi 'JPEG image data'
+
+          echo 'CLEAN_PUBLIC_REBUILD_VERIFIED'
