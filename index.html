@@ -2,27 +2,116 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#061527" />
-  <meta name="robots" content="noindex,nofollow" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#071827" />
+  <meta name="description" content="Bring the Lab Home: recover a working Washington R&D lab and return it to service in Tennessee for On the Double development." />
+  <meta name="build" content="clean-rebuild-2026-09-11-v2" />
   <title>Bring the Lab Home</title>
-  <style>
-    :root{--navy:#061527;--gold:#d4af37;--white:#f8fafc;--muted:#b9c4d0}
-    *{box-sizing:border-box}
-    html,body{margin:0;min-height:100%;background:var(--navy);color:var(--white);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-    body{display:grid;place-items:center;min-height:100vh;padding:28px}
-    main{max-width:720px;text-align:center}
-    .mark{width:58px;height:58px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;margin:0 auto 24px;color:var(--gold);font-weight:900;font-size:1.3rem}
-    h1{margin:0 0 14px;font-size:clamp(2.4rem,8vw,5rem);line-height:.95;letter-spacing:-.04em}
-    p{margin:0 auto;color:var(--muted);font-size:1.05rem;max-width:560px}
-    strong{color:var(--gold)}
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Bring the Lab Home">
+      <span class="brand-mark">N</span>
+      <span class="brand-copy"><strong>BRING THE LAB HOME</strong><small>WASHINGTON → TENNESSEE</small></span>
+    </a>
+    <button class="share-top" type="button" data-share>Share</button>
+  </header>
+
   <main>
-    <div class="mark" aria-hidden="true">N</div>
-    <h1>BRING THE LAB HOME</h1>
-    <p><strong>Offline for rebuild.</strong> The previous public version has been retired while the campaign page is rebuilt from the source material.</p>
+    <section class="hero" id="top">
+      <img id="heroImage" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Wide view of the complete Washington R&D lab with multiple computer stations, monitors, electronics, work surfaces and a whiteboard." />
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <p class="kicker">THE LAB EXISTED. THE LAB WORKED.</p>
+        <h1>BRING THE<br><span>LAB HOME.</span></h1>
+        <p class="hero-copy">A working R&amp;D lab built piece by piece in Washington is now in storage. The mission is simple: recover it, bring it to Tennessee, and put it back to work finishing <strong>On the Double</strong>.</p>
+        <div class="facts" aria-label="Campaign facts">
+          <div><b>$10K</b><span>Recovery target</span></div>
+          <div><b>WA → TN</b><span>Recovery route</span></div>
+          <div><b>R&amp;D</b><span>Return to service</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="story light">
+      <div class="wrap narrow">
+        <p class="eyebrow">NOT A CONCEPT RENDER</p>
+        <h2>This is the lab.</h2>
+        <p class="lede">Computers, displays, networking gear, electronics benches, Raspberry Pi work, solderless breadboards, testing, documentation, repairs and experiments. The photographs are not decoration. They are the record of a working build environment.</p>
+      </div>
+    </section>
+
+    <section class="evidence dark" id="evidence">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow gold">THE RECEIPTS</p>
+            <h2>Built by hand. Used for real work.</h2>
+          </div>
+          <p>Only lab and electronics images are used here. The greenhouse image is out. Original source files remain preserved separately under their original filenames.</p>
+        </div>
+
+        <div class="gallery">
+          <figure class="card">
+            <img src="assets/lab-workbench.jpg" alt="Dense Washington lab workbench with computers, displays, peripheral equipment and cabling." loading="lazy" />
+            <figcaption><b>Compute wall + workbench</b><span>Multiple systems, displays and peripherals operating as one working environment.</span></figcaption>
+          </figure>
+          <figure class="card">
+            <img src="assets/lab-wide.jpg" alt="Hands-on electronics workbench with project board, breadboard, wiring and Raspberry Pi hardware." loading="lazy" />
+            <figcaption><b>Hands-on electronics</b><span>Project board, breadboard, components, wiring and Raspberry Pi hardware.</span></figcaption>
+          </figure>
+        </div>
+        <p class="receipt-foot">No generated imagery. No storage contact sheet. No unrelated greenhouse image.</p>
+      </div>
+    </section>
+
+    <section class="storage light">
+      <div class="wrap storage-grid">
+        <div>
+          <p class="eyebrow">THE STORAGE RECEIPT</p>
+          <h2>One image. One purpose.</h2>
+          <p class="lede small">A single cropped frame from the preserved “everything in storage” video keeps the focus on the Washington storage unit and the equipment inside.</p>
+          <p class="privacy">The other participant is excluded from this public crop. No exact storage address is published. The original video remains preserved separately.</p>
+        </div>
+        <figure class="storage-photo">
+          <img id="storageImage" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Cropped proof frame showing the open Washington storage unit and stored contents, with the other participant excluded." loading="lazy" />
+          <figcaption>Single cropped storage proof frame.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="mission dark">
+      <div class="wrap narrow center">
+        <p class="eyebrow gold">WHERE IT GOES NEXT</p>
+        <h2>Ninja's Ultimate Dojo.</h2>
+        <p class="lede inverse">The recovered hardware returns to service as the working R&amp;D environment for On the Double. Inventory it. Clean it. Map it. Power it up carefully. Build. Test. Document. Repeat.</p>
+        <div class="flow" aria-label="Recovery path">
+          <span>WASHINGTON LAB</span><i>→</i><span>RECOVERY</span><i>→</i><span>TENNESSEE</span><i>→</i><span>OTD R&amp;D</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="support light" id="support">
+      <div class="wrap narrow center">
+        <p class="eyebrow">THE RECOVERY MISSION</p>
+        <h2>$10,000 to bring the lab home.</h2>
+        <p class="lede small">Transportation, fuel and lodging, storage access, safe loading and protection, plus documented recovery contingencies. Real quotes and receipts replace estimates as the recovery plan firms up.</p>
+        <div class="math"><span><b>1,000</b> × $10</span><span><b>500</b> × $20</span><span><b>200</b> × $50</span></div>
+        <button class="primary" type="button" data-share>Share the mission</button>
+        <p class="fineprint">This website does not process payments. A fundraising link will be connected separately when ready.</p>
+      </div>
+    </section>
   </main>
+
+  <footer>
+    <div class="wrap footer-grid">
+      <div><strong>BRING THE LAB HOME</strong><p>The lab existed. The lab worked. Now we bring it home and put it back to work.</p></div>
+      <p><b>Funding firewall:</b> Washington lab recovery remains separate from Mamaw's House fundraising and separate from OTD operating funds.</p>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
 </body>
 </html>
