@@ -1,4 +1,4 @@
-name: Verify clean public rebuild
+name: Verify professional R&D portfolio
 
 on:
   push:
@@ -9,38 +9,37 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-      - name: Wait for public deploy
-        run: sleep 120
-      - name: Verify corrected page and image payloads
+      - name: Wait for GitHub Pages deployment
+        run: sleep 60
+      - name: Verify professional page and campaign actions
         run: |
           set -euo pipefail
-          BASE="https://bring-the-lab-home.onrender.com"
+          BASE="https://dinididit.github.io/BRING-THE-LAB-HOME"
           URL="$BASE/?v=$GITHUB_SHA"
-          echo "Checking $URL"
           status=$(curl -L -sS -H 'Cache-Control: no-cache' -o /tmp/page.html -w "%{http_code}" "$URL")
           echo "HTTP $status"
           test "$status" = "200"
 
-          grep -qi 'clean-rebuild-2026-09-11-v2' /tmp/page.html
-          grep -qi 'This is the lab' /tmp/page.html
-          grep -qi 'One image. One purpose.' /tmp/page.html
-          grep -qi "Ninja's Ultimate Dojo" /tmp/page.html
+          grep -qi 'professional-rd-portfolio-2026-09-12-v7' /tmp/page.html
+          grep -qi 'JASON A. HAYES' /tmp/page.html
+          grep -qi 'SKLALLAM 360' /tmp/page.html
+          grep -qi 'Build. Stress it. Learn. Rebuild.' /tmp/page.html
+          grep -qi 'PROFESSIONAL EXPERIENCE' /tmp/page.html
+          grep -qi 'Support the Lab Recovery' /tmp/page.html
+          grep -qi 'Contribute on GitHub' /tmp/page.html
 
-          if grep -qi 'Frames from the' /tmp/page.html; then
-            echo 'OLD_STORAGE_CONTACT_SHEET_COPY_STILL_LIVE'
+          if grep -qi 'Hands-on electronics' /tmp/page.html; then
+            echo 'RETIRED_GREENHOUSE_CARD_COPY_FOUND'
             exit 1
           fi
-          if grep -qi 'Offline for rebuild' /tmp/page.html; then
-            echo 'RETIREMENT_PLACEHOLDER_STILL_LIVE'
+          if grep -qi 'storage contact sheet' /tmp/page.html; then
+            echo 'RETIRED_PRODUCTION_NOTE_FOUND'
             exit 1
           fi
 
-          curl -L -sS -H 'Cache-Control: no-cache' "$BASE/assets/data/hero-00.b64?v=$GITHUB_SHA" -o /tmp/hero0
-          curl -L -sS -H 'Cache-Control: no-cache' "$BASE/assets/data/hero-rest.b64?v=$GITHUB_SHA" -o /tmp/herorest
-          cat /tmp/hero0 /tmp/herorest | tr -d '\n\r ' | base64 -d > /tmp/hero.jpg
-          file /tmp/hero.jpg | grep -qi 'JPEG image data'
+          for asset in assets/hero-lab.jpg assets/lab-workbench.jpg styles.css app.js; do
+            code=$(curl -L -sS -o /dev/null -w "%{http_code}" "$BASE/$asset?v=$GITHUB_SHA")
+            test "$code" = "200"
+          done
 
-          curl -L -sS -H 'Cache-Control: no-cache' "$BASE/assets/data/storage.b64?v=$GITHUB_SHA" | tr -d '\n\r ' | base64 -d > /tmp/storage.jpg
-          file /tmp/storage.jpg | grep -qi 'JPEG image data'
-
-          echo 'CLEAN_PUBLIC_REBUILD_VERIFIED'
+          echo 'PROFESSIONAL_RD_PORTFOLIO_VERIFIED'
