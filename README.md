@@ -1,41 +1,32 @@
 # BRING THE LAB HOME
 
-Public campaign site for the **$10,000 Washington R&D lab recovery mission**.
+Professional R&D portfolio and public recovery campaign for **Jason A. Hayes**.
 
-## Mission
-Recover the Washington R&D lab, transport it to Tennessee, and return the hardware to service for On the Double development and continuing technical R&D.
+## Public purpose
+
+This site presents the documented development path connecting:
+
+- SKLALLAM 360 scientific and technical R&D;
+- the physical Washington compute, networking and electronics lab;
+- applied work involving Raspberry Pi, embedded Linux, storage, PoE networking, geospatial systems, cloud and distributed architecture;
+- broader operational, management and environmental-science development; and
+- the later, legally distinct development of On the Double in Morristown, Tennessee.
+
+The campaign seeks **$10,000** to recover the Washington lab, transport it to Tennessee and return it to service for continuing R&D.
 
 ## Source discipline
-- Original source files are preserved outside this public implementation repository.
-- Public images/video in `assets/` are campaign derivatives only.
-- Original filenames and provenance remain in the canonical source archive.
-- Do not publish exact storage location, credentials, private keys, account secrets, or serial numbers without a deliberate review.
-- This campaign is separate from Mamaw's House funding and from OTD operating funds.
 
-## Fundraiser link
-When the recovery fundraiser URL exists, edit only `config.js`:
+- Public claims must remain grounded in the controlling archive and source checkpoints.
+- Research, exploration and firsthand technical history are not rewritten as production-deployment claims.
+- SKLALLAM 360 and On the Double remain legally and historically distinct.
+- Original source files remain preserved outside this public implementation repository.
+- Do not publish exact storage location, credentials, private keys, account secrets or serial numbers.
+- Lab-recovery support remains separate from Mamaw's House fundraising and OTD operating funds.
 
-```js
-fundraiserUrl: "https://..."
-```
+## Payment boundary
 
-The site itself never processes money.
+The support button opens Tony's PayPal Tip Jar. GitHub Pages does not collect or process payment information. Contributions are not advertised as tax-deductible.
 
-## GitHub Pages
-After this repository is public:
-1. Open **Settings → Pages**.
-2. Choose **Deploy from a branch**.
-3. Select **main** and **/(root)**.
-4. Save.
+## Deployment
 
-Expected URL:
-`https://dinididit.github.io/BRING-THE-LAB-HOME/`
-
-## AWS Amplify
-
-[![Deploy to Amplify Hosting](https://oneclick.amplifyapp.com/button.svg)](https://console.aws.amazon.com/amplify/home#/deploy?repo=https://github.com/dinididit/BRING-THE-LAB-HOME)
-
-This repository includes `amplify.yml` for a no-build static deploy. Connect the GitHub repository in AWS Amplify Hosting, select the `main` branch, review the detected config, and deploy. No AWS access key belongs in this repository.
-
-## Lightweight by design
-No framework, no autoplay video, no web fonts, no analytics bundle, and lazy-loaded gallery images. The goal is a fast page that does not cook a phone just to tell the story.
+The site is a lightweight static build published from `main` through GitHub Pages.
