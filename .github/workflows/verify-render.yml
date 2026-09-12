@@ -20,7 +20,7 @@ jobs:
           echo "HTTP $status"
           test "$status" = "200"
 
-          grep -qi 'professional-rd-portfolio-2026-09-12-v9' /tmp/page.html
+          grep -qi 'professional-rd-portfolio-2026-09-12-v10' /tmp/page.html
           grep -qi 'JASON A. HAYES' /tmp/page.html
           grep -qi 'SKLALLAM 360' /tmp/page.html
           grep -qi 'Build. Stress it. Learn. Rebuild.' /tmp/page.html
@@ -31,6 +31,13 @@ jobs:
           grep -qi 'City of Morristown' /tmp/page.html
           grep -qi 'Support the Lab Recovery' /tmp/page.html
           grep -qi 'Contribute on GitHub' /tmp/page.html
+          grep -qi 'id="supportLink"' /tmp/page.html
+          grep -qi 'id="repositoryLink"' /tmp/page.html
+          grep -qi 'paypal.com/qrcodes/managed/e6443c25-2c05-4793-9ee5-132c577f2359' /tmp/page.html
+          grep -qi 'property="og:title"' /tmp/page.html
+          grep -qi 'property="og:image"' /tmp/page.html
+          grep -qi 'name="twitter:card" content="summary_large_image"' /tmp/page.html
+          grep -qi 'rel="canonical" href="https://dinididit.github.io/BRING-THE-LAB-HOME/"' /tmp/page.html
 
           if grep -qi 'assets/lab-wide.jpg' /tmp/page.html; then
             echo 'RETIRED_GREENHOUSE_CARD_COPY_FOUND'
@@ -41,9 +48,22 @@ jobs:
             exit 1
           fi
 
-          for asset in assets/hero-lab.jpg assets/lab-workbench.jpg assets/nwic-port-gamble-professional-development.jpg styles.css app.js; do
+          for asset in assets/hero-lab.jpg assets/lab-workbench.jpg assets/nwic-port-gamble-professional-development.jpg styles.css app.js config.js; do
             code=$(curl -L -sS -o /dev/null -w "%{http_code}" "$BASE/$asset?v=$GITHUB_SHA")
             test "$code" = "200"
           done
 
-          echo 'PROFESSIONAL_RD_PORTFOLIO_VERIFIED'
+          curl -L -sS -H 'Cache-Control: no-cache' "$BASE/app.js?v=$GITHUB_SHA" -o /tmp/app.js
+          curl -L -sS -H 'Cache-Control: no-cache' "$BASE/config.js?v=$GITHUB_SHA" -o /tmp/config.js
+          grep -q 'navigator.share' /tmp/app.js
+          grep -q 'navigator.clipboard' /tmp/app.js
+          grep -q 'supportLink' /tmp/app.js
+          grep -q 'repositoryLink' /tmp/app.js
+          grep -q 'fundraiserUrl' /tmp/config.js
+          grep -q 'repositoryUrl' /tmp/config.js
+          grep -q 'publicUrl' /tmp/config.js
+          grep -q 'shareTitle' /tmp/config.js
+          grep -q 'shareText' /tmp/config.js
+          grep -q 'e6443c25-2c05-4793-9ee5-132c577f2359' /tmp/config.js
+
+          echo 'PROFESSIONAL_RD_PORTFOLIO_AND_CAMPAIGN_CONTROLS_VERIFIED'
