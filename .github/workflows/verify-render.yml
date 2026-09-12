@@ -20,12 +20,13 @@ jobs:
           echo "HTTP $status"
           test "$status" = "200"
 
-          grep -qi 'professional-rd-portfolio-2026-09-12-v8' /tmp/page.html
+          grep -qi 'professional-rd-portfolio-2026-09-12-v9' /tmp/page.html
           grep -qi 'JASON A. HAYES' /tmp/page.html
           grep -qi 'SKLALLAM 360' /tmp/page.html
           grep -qi 'Build. Stress it. Learn. Rebuild.' /tmp/page.html
           grep -qi 'PROFESSIONAL EXPERIENCE' /tmp/page.html
           grep -qi 'Northwest Indian College' /tmp/page.html
+          grep -qi 'assets/nwic-port-gamble-professional-development.jpg?v=2' /tmp/page.html
           grep -qi 'Port Gamble S’Klallam Tribe' /tmp/page.html
           grep -qi 'City of Morristown' /tmp/page.html
           grep -qi 'Support the Lab Recovery' /tmp/page.html
