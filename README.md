@@ -14,6 +14,18 @@ This site presents the documented development path connecting:
 
 The campaign seeks **$10,000** to recover the Washington lab, transport it to Tennessee and return it to service for continuing R&D.
 
+## Control panel
+
+The public campaign controls are intentionally simple and centralized:
+
+- `config.js` is the primary control file for the PayPal support URL, public GitHub repository URL, canonical public site URL, and native-share title/text.
+- `index.html` contains the visible fallback links plus Open Graph/Twitter metadata so the page still works without JavaScript and produces a strong social-link preview.
+- `app.js` reads `config.js`, wires the support and repository buttons, uses the device-native share sheet when available, and falls back to copying the clean public URL.
+- `.github/workflows/pages.yml` deploys the static site to GitHub Pages.
+- `.github/workflows/verify-render.yml` checks the published page, required campaign controls, share metadata, scripts and core visual assets after pushes to `main`.
+
+If the support destination ever changes, update `fundraiserUrl` in `config.js` and the fallback `href` on `#supportLink` in `index.html` together, then let the verification workflow confirm the deployed result.
+
 ## Source discipline
 
 - Public claims must remain grounded in the controlling archive and source checkpoints.
