@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Wait for GitHub Pages deployment
-        run: sleep 60
+        run: sleep 30
       - name: Verify professional page and campaign actions
         run: |
           set -euo pipefail
@@ -28,7 +28,7 @@ jobs:
           grep -qi 'Support the Lab Recovery' /tmp/page.html
           grep -qi 'Contribute on GitHub' /tmp/page.html
 
-          if grep -qi 'Hands-on electronics' /tmp/page.html; then
+          if grep -qi 'assets/lab-wide.jpg' /tmp/page.html; then
             echo 'RETIRED_GREENHOUSE_CARD_COPY_FOUND'
             exit 1
           fi
