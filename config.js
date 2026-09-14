@@ -3,5 +3,5 @@ window.BRING_THE_LAB_HOME = {
   repositoryUrl: "https://github.com/dinididit/BRING-THE-LAB-HOME",
   publicUrl: "https://dinididit.github.io/BRING-THE-LAB-HOME/",
   shareTitle: "Jason A. Hayes | Applied R&D | Bring the Lab Home",
-  shareText: "Research gets real when you build it. Follow Jason A. Hayes's documented R&D path and the mission to bring the Washington lab home to Tennessee."
+  shareText: "Hands-on research, systems development, and the mission to recover the Washington R&D lab and return it to service in Tennessee."
 };
